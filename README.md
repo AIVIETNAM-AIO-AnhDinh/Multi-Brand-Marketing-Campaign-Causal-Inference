@@ -20,19 +20,6 @@ sets). They are almost certainly drawn from the same synthetic generator. Theref
 - The closing section of the written report explicitly maps how this framework
   would generalize to real brand telemetry.
 
-## The five pillars
-
-1. **Data quality & ROI diagnostics** — verify the ROI definition, profile the data,
-   surface the 46% loss-making-campaign headline.
-2. **Funnel decomposition** — impression → click → lead → conversion → revenue rates
-   by campaign_type × channel × audience, with bootstrapped CIs.
-3. **Campaign archetype clustering** — unsupervised segmentation of campaigns
-   (not customers — no customer IDs in this data).
-4. **Causal & uplift analysis (flagship)** — DAG → propensity weighting → Double ML
-   → heterogeneous treatment effects via causal forest → mediation → sensitivity.
-5. **Planned-campaign ROI scorer** — Streamlit app that takes a campaign brief and
-   returns expected ROI with confidence band and top-3 counterfactual reallocations.
-
 ## Methodology
 
 The analysis is layered: each stage answers a sharper question than the last, and the
@@ -50,7 +37,7 @@ views: `01_stg_campaigns.sql` (staging — typed columns, derived per-row metric
 metrics in SQL once — rather than recomputing per notebook — eliminates the most
 common cross-notebook bug: a metric that subtly differs across analyses.
 
-### Stage 2 — EDA & data quality (notebook 01)
+### Stage 2 — EDA & data quality 
 
 Five checks: row counts and brand mix; **ROI-formula verification** (comparing the
 supplied `roi_reported` against two candidate structural formulas); the loss-making
