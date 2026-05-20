@@ -241,68 +241,6 @@ mediator guardrails, triangulated estimators, mandatory diagnostics, sensitivity
 analyses), and the reproducible warehouse → notebook → report pipeline are the
 deliverable.
 
-### Generalizing to real data
-
-For a real Indian beauty brand applying this pipeline to its own campaign data,
-the changes are minimal: drop the synthetic CSVs into `data/raw/` and rewire the
-loader. Three additions would harden the analysis: random holdouts on ~5% of
-campaign spend to convert observational ATE estimates into experimental ones;
-joining offline halo metrics (in-store sales correlated with campaign windows)
-to expand the outcome space; and a proper marketing-mix model to disentangle
-overlapping campaign effects on shared audiences. The causal pipeline framework
-described here is the foundation — those three additions are what convert it
-into a production-grade measurement system.
-
-## Directory structure
-
-```
-beauty_campaign_analytics/
-├── README.md                  ← this file
-├── Makefile                   ← common commands (make load, make eda, make app)
-├── requirements.txt
-├── .gitignore
-├── data/                      ← DuckDB file lives here (created on load)
-├── src/
-│   ├── data_loader.py         ← orchestrates: CSVs → DuckDB → SQL transforms
-│   ├── festival_calendar.py   ← Indian festival + e-commerce sale calendar
-│   └── causal_utils.py        ← shared helpers for causal notebooks
-├── sql/
-│   ├── 01_stg_campaigns.sql           ← typed staging view + derived rates
-│   ├── 02_campaigns_enriched.sql      ← join campaigns × calendar
-│   └── 03_mart_funnel.sql             ← funnel-rate aggregates
-├── notebooks/                 ← jupytext .py files; open as notebooks
-│   ├── 01_eda_data_quality.py
-│   ├── 02_funnel_decomposition.py
-│   ├── 03_campaign_archetypes.py
-│   ├── 04_causal_analysis.py
-│   └── 05_uplift_scorer.py
-├── app/
-│   └── campaign_scorer.py     ← Streamlit ROI scorer
-├── reports/
-│   └── executive_summary.md   ← final written deliverable template
-└── dashboards/
-    └── README.md              ← Tableau extension guidance
-```
-
-The three brand CSVs are read from the parent directory (`../*.csv`), so this folder
-sits alongside them in `marketing project/`.
-
-## How to run
-
-```bash
-# one-time setup
-pip install -r requirements.txt
-
-# build the DuckDB database (idempotent)
-make load
-
-# run notebooks as scripts, or open them in Jupyter/VS Code
-python notebooks/01_eda_data_quality.py
-python notebooks/02_funnel_decomposition.py
-
-# launch the campaign scorer
-make app
-```
 
 ## Deliverables checklist
 
@@ -312,10 +250,3 @@ make app
 - [x] Causal pipeline: pre-specified treatments, cross-fitted nuisance models,
       five triangulated estimators, full diagnostic suite, sensitivity analyses
 - [x] Forest plots + per-treatment markdown findings files
-- [ ] Funnel decomposition write-up with bootstrapped CIs
-- [ ] Campaign archetype clustering (K-means + GMM, with persona writeups)
-- [ ] Streamlit campaign-ROI scorer
-- [ ] Tableau dashboard extensions (funnel-rate views + CATE heatmap)
-- [ ] Executive summary (2 pages) with $-impact estimates
-- [ ] Loom walkthrough (5 min)
-- [ ] LinkedIn / Medium write-up of the headline finding
