@@ -1,4 +1,4 @@
-# Beauty Campaign Analytics — Multi-Brand Causal & Uplift Framework
+# Beauty Campaign Analytics — Multi-Brand Causal Framework
 
 End-to-end marketing analytics project on three Indian beauty/cosmetics e-commerce brand
 campaign datasets (**Purplle**, **Nykaa**, **Tira**), covering Jul 2024 – Jun 2025. Link to datasets: https://www.kaggle.com/datasets/sshriya08/multi-brand-marketing-campaign-performance-dataset
